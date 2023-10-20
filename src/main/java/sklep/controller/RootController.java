@@ -7,13 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @Controller
 public class RootController {
-
     @GetMapping("/")
     public String index() {
-        return "index.jsp";
+        return "index";
     }
 
     @GetMapping("/hello")
@@ -21,10 +19,14 @@ public class RootController {
     public String hello() {
         return "Hello world";
     }
+
     @GetMapping("/time")
     public String ktoraGodzina(Model model) {
-        LocalDateTime  localDateTimeNow = LocalDateTime.now();
-        model.addAttribute("dt", localDateTimeNow);
-        return "pokaz_czas.jsp";
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("dt", now);
+        return "pokaz_czas";
     }
+
 }
+
+

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Aplikacja Sklep Spring</title>
-    <link rel="stylesheet" type="text/css" href="../../styl.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <h1>Spis treści</h1>

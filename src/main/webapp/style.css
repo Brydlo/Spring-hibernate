@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-    background-color: #EEFFDD;
+    background-color: grey;
     font-family: 'Arial', sans-serif;
 }
 
@@ -117,7 +117,7 @@ div.action {
 }
 
 .action a:hover {
-    color: #0000CC;
+    color: #111111;
 }
 
 

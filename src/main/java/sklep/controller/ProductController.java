@@ -1,5 +1,6 @@
 package sklep.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +24,6 @@ public class ProductController {
         model.addAttribute("products", products);
         return "products";
     }
-    @GetMapping("/products/szukaj")
-    public String szukaj(Model model, String name) {
-        List<Product> products = productRepository.findByProductNameContainsIgnoringCase(name);
-        model.addAttribute("products", products);
-        return "wyszukiwarka";
-    }
 
     @GetMapping("/products/{numer}")
     public String readOne(Model model, @PathVariable Integer numer) {
@@ -43,6 +38,34 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products/szukaj")
+    public String szukaj(Model model,
+                         String name,
+                         BigDecimal min,
+                         BigDecimal max) {
+        List<Product> products = List.of();
+        if(name != null && !name.isEmpty() && min == null && max == null) {
+            products = productRepository.findByProductNameContainsIgnoringCase(name);
+        } else if ((name == null || name.isEmpty()) && (min != null || max != null)) {
+            if(min == null) {
+                min = BigDecimal.ZERO;
+            }
+            if(max == null) {
+                max = BigDecimal.valueOf(1000_000_000);
+            }
+            products = productRepository.findByPriceBetween(min, max);
+        } else if (name != null && !name.isEmpty() && (min != null || max != null)) {
+            if(min == null) {
+                min = BigDecimal.ZERO;
+            }
+            if(max == null) {
+                max = BigDecimal.valueOf(1000_000_000);
+            }
+            products = productRepository.findByProductNameContainingIgnoringCaseAndPriceBetween(name, min, max);
+        }
+        model.addAttribute("products", products);
+        return "wyszukiwarka2";
+    }
 }
 
 

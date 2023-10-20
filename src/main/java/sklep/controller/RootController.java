@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class RootController {
 
+    @GetMapping("/")
+    public String index() {
+        return "index.jsp";
+    }
+
     @GetMapping("/hello")
     @ResponseBody
     public String hello() {
         return "Hello world";
     }
-    @GetMapping("/godzina")
+    @GetMapping("/time")
     public String ktoraGodzina(Model model) {
         LocalDateTime  localDateTimeNow = LocalDateTime.now();
         model.addAttribute("dt", localDateTimeNow);

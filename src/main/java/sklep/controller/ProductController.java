@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import sklep.model.Product;
 import sklep.repository.ProductRepository;
+import sklep.util.PhotoUtil;
 
 @Controller
 public class ProductController {
@@ -66,6 +68,15 @@ public class ProductController {
         model.addAttribute("products", products);
         return "wyszukiwarka2";
     }
+    @GetMapping(path="/products/{id}/photo", produces="image/jpeg")
+    @ResponseBody
+    public byte[] getPhoto(@PathVariable("id") Integer productId) {
+        return photoUtil.readBytes(productId);
+    }
+
+    @Autowired
+    private PhotoUtil photoUtil;
 }
+
 
 

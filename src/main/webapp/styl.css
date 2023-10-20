@@ -1,4 +1,4 @@
-/* Resetowanie domyślnych styli przeglądarki */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,10 +7,11 @@
 
 /* Body i ogólne style */
 body {
-    background-color: #f2f2f2;
-    color: #333;
     font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
     margin: 20px;
+    text-align: center;
 }
 
 .container {
@@ -18,69 +19,86 @@ body {
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
 }
 
 /* Nagłówki */
-h1, h2 {
-    color: #333;
-    border-bottom: 2px solid #4d94ff;
-    padding-bottom: 5px;
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-/* Linki */
-a {
+/* Wyszukiwarka */
+.wyszukiwarka {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.wyszukiwarka label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.wyszukiwarka input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.wyszukiwarka button {
+    padding: 5px 10px;
+    background-color: #4d94ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.wyszukiwarka button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Produkty */
+.product {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.photo {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.product-name a {
+    font-weight: bold;
     color: #4d94ff;
     text-decoration: none;
 }
 
-a:hover {
-    color: #63a6ff;
-}
-
-/* Listy */
-ul {
-    list-style: none;
-}
-
-/* Spis treści */
-h1 {
-    font-size: 24px;
-    margin-top: 20px;
-}
-
-h2 {
-    font-size: 18px;
-    margin-top: 10px;
-}
-
-ul li {
-    margin-top: 5px;
-}
-
-/* Nawigacja */
-.navbar {
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
-    margin: 20px 0;
-    padding: 10px;
-}
-
-.navbar a {
-    color: #333;
-    margin: 0 20px;
-}
-
-.navbar a:hover {
+.product-price {
     color: #4d94ff;
+}
+
+.product-description {
+    color: #555;
 }
 
 /* Stopka */
 .footer {
-    background-color: #f2f2f2;
-    border-top: 1px solid #ccc;
-    margin: 20px 0;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ddd;
     padding: 20px 0;
     text-align: center;
     color: #808080;

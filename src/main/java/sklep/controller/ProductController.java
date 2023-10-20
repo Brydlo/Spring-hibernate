@@ -23,6 +23,12 @@ public class ProductController {
         model.addAttribute("products", products);
         return "products";
     }
+    @GetMapping("/products/szukaj")
+    public String szukaj(Model model, String name) {
+        List<Product> products = productRepository.findByProductNameContainsIgnoringCase(name);
+        model.addAttribute("products", products);
+        return "wyszukiwarka";
+    }
 
     @GetMapping("/products/{numer}")
     public String readOne(Model model, @PathVariable Integer numer) {

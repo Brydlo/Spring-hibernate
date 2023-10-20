@@ -1,16 +1,34 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: czern
-  Date: 20.10.2023
-  Time: 16:08
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Katalog towarów</title>
+    <link rel="stylesheet" type="text/css" href="/styl.css"/>
 </head>
 <body>
+<div><a href="/">Powrót do spisu treści</a></div>
+<h1>Wyszukiwarka produktów</h1>
+
+<form method="get" class="wyszukiwarka">
+    <table>
+        <tr><td><label for="name">Podaj nazwę:</label></td>
+            <td><input type="text" id="name" name="name" value="${param.name}"></td></tr>
+        <tr><td><button>Szukaj</button></td></tr>
+    </table>
+</form>
+
+<c:forEach var="product" items="${products}">
+    <div class="product">
+        <img class="photo" src="/products/${product.productId}/photo" alt=""/>
+        <p>Towar <a href="/products/${product.productId}" class="product-name">${product.productName}</a></p>
+        <p>Cena: <span class="product-price">${product.price}</span></p>
+        <p class="product-description">${product.description}</p>
+    </div>
+</c:forEach>
 
 </body>
 </html>
+
+

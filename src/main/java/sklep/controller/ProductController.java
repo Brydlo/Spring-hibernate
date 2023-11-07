@@ -7,27 +7,26 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ResponseBody;
 import sklep.model.Product;
 import sklep.repository.ProductRepository;
 import sklep.util.PhotoUtil;
 
 @Controller
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-    @GetMapping("/products")
+    @GetMapping
     public String readAll(Model model) {
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
         return "products";
     }
 
-    @GetMapping("/products/{numer}")
+    @GetMapping("/{numer}")
     public String readOne(Model model, @PathVariable Integer numer) {
         Optional<Product> product = productRepository.findById(numer);
 
@@ -40,7 +39,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/products/szukaj")
+    @GetMapping("/szukaj")
     public String szukaj(Model model,
                          String name,
                          BigDecimal min,
@@ -68,7 +67,42 @@ public class ProductController {
         model.addAttribute("products", products);
         return "wyszukiwarka2";
     }
-    @GetMapping(path="/products/{id}/photo", produces="image/jpeg")
+
+    @GetMapping("/{id}/edit")
+    public String editProduct(Model model, @PathVariable("id") Integer productId) {
+        // W tej metodzie ładujemy dane istniejącego produktu i przechodzimy do formularza
+        Optional<Product> product = productRepository.findById(productId);
+        if(product.isPresent()) {
+            model.addAttribute("product", product.get());
+            return "product_form";
+        } else {
+            model.addAttribute("product_id", productId);
+            return "missing_product";
+        }
+    }
+
+    @GetMapping("/new")
+    public String newProduct() {
+        // W tej metodzie wyświetlamy pusty formularz
+        return "product_form";
+    }
+
+    @PostMapping({"/{id}/edit", "/new"})
+    // Ta metoda zapisuje dane przysłane z formularza obojętnie, czy to było edit, czy new
+    public String saveProduct(Product product) {
+        // W tej wersji dane z wypełnionego formularza odbieramy w postaci jednego obiektu Product.
+        // Spring sam wpisze dane do pól o takich samych nazwach.
+        // Taki parametr od razu staje się częścią modelu (to jest tzw. ModelAttribute)
+        System.out.println("id przed zapisem: " + product.getProductId());
+        productRepository.save(product);
+        System.out.println("id po zapisie: " + product.getProductId());
+
+        return "product_form";
+    }
+
+
+
+    @GetMapping(path="/{id}/photo", produces="image/jpeg")
     @ResponseBody
     public byte[] getPhoto(@PathVariable("id") Integer productId) {
         return photoUtil.readBytes(productId);
@@ -77,6 +111,5 @@ public class ProductController {
     @Autowired
     private PhotoUtil photoUtil;
 }
-
 
 

@@ -2,6 +2,8 @@ package sklep.model;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Customer implements Serializable {
 
 	@Id
 	@Column(name="customer_email", updatable=false)
+	@Email
 	private String customerEmail;
 
 	private String address;
@@ -31,6 +34,7 @@ public class Customer implements Serializable {
 	private String phoneNumber;
 
 	@Column(name="postal_code")
+	@Pattern(regexp = "[0-9]{2}-[0-9]{3}")
 	private String postalCode;
 
 	//bi-directional many-to-one association to Order

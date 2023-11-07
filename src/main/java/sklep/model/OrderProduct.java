@@ -2,6 +2,7 @@ package sklep.model;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 
 import java.math.BigDecimal;
 
@@ -25,6 +26,7 @@ public class OrderProduct implements Serializable {
 	@Column(name="actual_vat")
 	private BigDecimal actualVat;
 
+	@Min(1)
 	private Integer quantity;
 
 	//bi-directional many-to-one association to Order

@@ -2,6 +2,11 @@ package sklep.model;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
 
@@ -23,11 +28,18 @@ public class Product implements Serializable {
 
 	private String description;
 
+	@DecimalMin("0.01")
+	@DecimalMax("9999.99") //celowo obniżone, aby sprawdzić błędy
+	@NotNull
 	private BigDecimal price;
 
 	@Column(name="product_name")
+	@NotBlank
+	@Length(max = 20)
 	private String productName;
 
+	@DecimalMin("0.00")
+	@DecimalMax("0.99")
 	private BigDecimal vat;
 
 	public Product() {

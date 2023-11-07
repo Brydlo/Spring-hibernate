@@ -2,6 +2,7 @@ package sklep.controller;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,15 @@ public class RootController {
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("dt", now);
         return "pokaz_czas";
+    }
+
+    @GetMapping("/whoami")
+    public String whoAmI(Authentication authentication, Model model) {
+        if(authentication != null && authentication.isAuthenticated()) {
+            model.addAttribute("userName", authentication.getName());
+            model.addAttribute("authorities", authentication.getAuthorities());
+        }
+        return "whoami";
     }
 
 }

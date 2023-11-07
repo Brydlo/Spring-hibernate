@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import sklep.basket.Basket;
 import sklep.model.Product;
 import sklep.repository.ProductRepository;
 import sklep.util.PhotoUtil;
@@ -88,6 +90,20 @@ public class ProductController {
     public String newProduct() {
         // W tej metodzie wyświetlamy pusty formularz
         return "product_form";
+    }
+
+    @GetMapping("/{id}/add-to-basket")
+    public String addToBasket(@PathVariable("id") Integer productId,
+                              HttpSession sesja) {
+        Optional<Product> product = productRepository.findById(productId);
+        if(product.isPresent()) {
+//            w tej wersji stosujemy leniwą inicjalizację
+            Basket basket = (Basket) sesja.getAttribute("basket");
+            return "";
+        } else {
+            System.err.println("Nieznany produkt dodawany do koszyka : " + productId);
+        }
+        return "redirect:/products";
     }
 
     @PostMapping({"/{id}/edit", "/new"})

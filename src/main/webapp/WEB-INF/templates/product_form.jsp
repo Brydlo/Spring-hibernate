@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,45 +9,53 @@
     <link rel="stylesheet" type="text/css" href="/styl.css">
 </head>
 <body>
-<h1>Edycja produktu</h1>
-<form id="product-form" method="post">
-    <table class="form">
+
+<c:choose>
+    <c:when test="${not empty(product.productId)}">
+        <h1>Edycja produktu nr ${product.productId}</h1>
+    </c:when>
+    <c:otherwise>
+        <h1>Edycja nowego produktu</h1>
+    </c:otherwise>
+</c:choose>
+
+<f:form id="product-form" method="post" modelAttribute="product">
+    <table class="form-tab">
         <tr>
-            <td><label for="productId">Numer:</label></td>
-            <td><input id="productId" name="productId" placeholder="brak" type="number"
-                       readonly="readonly" value="${product.productId}" /></td>
+            <td><f:label path="productId">Numer:</f:label></td>
+            <td><f:input path="productId" placeholder="brak" type="number" readonly="true"/></td>
         </tr>
         <tr>
-            <td><label for="productName">Nazwa towaru:</label></td>
-            <td><input id="productName" name="productName" placeholder="nazwa..."
-                       type="text" value="${product.productName}" /></td>
+            <td><f:label path="productName">Nazwa towaru:</f:label></td>
+            <td><f:input path="productName" placeholder="nazwa..." type="text"/>
+                <f:errors path="productName" cssClass="form-error" element="div"/>
+            </td>
         </tr>
         <tr>
-            <td><label for="price">Cena:</label></td>
-            <td><input id="price" name="price" placeholder="12.90"
-                       title="tu wpisz cenę" type="number" step="0.01"
-                       value="${product.price}" /></td>
+            <td><f:label path="price">Cena:</f:label></td>
+            <td><f:input path="price" placeholder="12.90" type="number" step="0.01"/>
+                <f:errors path="price" cssClass="form-error" element="div"/>
+            </td>
         </tr>
         <tr>
-            <td><label for="vat">Stawka VAT:</label></td>
-            <td><input id="vat" name="vat" placeholder="0.23" title="tu wpisz vat"
-                       type="number" step="0.01" value="${product.vat}" /></td>
+            <td><f:label path="vat">Stawka VAT:</f:label></td>
+            <td><f:input path="vat" placeholder="0.23" type="number" step="0.01"/>
+                <f:errors path="vat" cssClass="form-error" element="div"/>
+            </td>
         </tr>
         <tr>
-            <td><label for="description">Opis:</label></td>
-            <td><textarea id="description" name="description" rows="10" cols="120">${product.description}</textarea></td>
+            <td><f:label path="description">Opis:</f:label></td>
+            <td><f:textarea path="description" rows="10"/></td>
         </tr>
         <tr>
-            <td><button>Zapisz</button></td>
+            <td><f:button>Zapisz</f:button></td>
         </tr>
     </table>
-</form>
-<div class="action">
-    <a href="/products">powrót do listy produktów</a>
-</div>
-<div class="action">
-    <a href="/">powrót do spisu treści</a>
-</div>
+</f:form>
+
+<div><a class="action" href="/products">powrót do listy produktów</a></div>
+<div><a class="action" href="/">powrót do spisu treści</a></div>
 </body>
 </html>
+
 

@@ -97,14 +97,19 @@ public class ProductController {
                               HttpSession sesja) {
         Optional<Product> product = productRepository.findById(productId);
         if(product.isPresent()) {
-//            w tej wersji stosujemy leniwą inicjalizację
+            // w tej wersji stosujemy leniwą inicjalizację
             Basket basket = (Basket) sesja.getAttribute("basket");
-            return "";
+            if(basket == null) {
+                basket = new Basket();
+                sesja.setAttribute("basket", basket);
+            }
+            basket.addProduct(product.get());
         } else {
-            System.err.println("Nieznany produkt dodawany do koszyka : " + productId);
+            System.err.println("Nieznany produkt dodawany do koszyka: " + productId);
         }
         return "redirect:/products";
     }
+
 
     @PostMapping({"/{id}/edit", "/new"})
     // Ta metoda zapisuje dane przysłane z formularza obojętnie, czy to było edit, czy new

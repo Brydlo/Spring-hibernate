@@ -94,15 +94,17 @@ public class ProductController {
 
     @GetMapping("/{id}/add-to-basket")
     public String addToBasket(@PathVariable("id") Integer productId,
-                              HttpSession sesja) {
+                              /*HttpSession sesja - można tak ale lepiej tak -> */ @SessionAttribute Basket basket) {
         Optional<Product> product = productRepository.findById(productId);
         if(product.isPresent()) {
             // w tej wersji stosujemy leniwą inicjalizację
-            Basket basket = (Basket) sesja.getAttribute("basket");
-            if(basket == null) {
-                basket = new Basket();
-                sesja.setAttribute("basket", basket);
-            }
+//            po dodaniu BaketConfiguration uznajemy że to listener przygotował pusty koszyk.
+//            Basket basket = (Basket) sesja.getAttribute("basket");
+//            basket.addProduct(product.get());
+//            if(basket == null) {
+//                basket = new Basket();
+//                sesja.setAttribute("basket", basket);
+//            }
             basket.addProduct(product.get());
         } else {
             System.err.println("Nieznany produkt dodawany do koszyka: " + productId);

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,7 @@ public class ProductController {
 
     @GetMapping
     public String readAll(Model model) {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAll(Sort.by("productId"));
         model.addAttribute("products", products);
         return "products";
     }
@@ -104,12 +105,13 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             System.out.println("Są błędy : " + bindingResult.getAllErrors());
 //            normalnie wyświetlone zostałoby coś na stronie
+            return "product_form";
         } else {
             System.out.println("id przed zapisem: " + product.getProductId());
             productRepository.save(product);
             System.out.println("id po zapisie: " + product.getProductId());
         }
-        return "product_form";
+        return "redirect:/products";
     }
 
 

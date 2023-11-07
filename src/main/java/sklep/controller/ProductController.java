@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -89,10 +90,13 @@ public class ProductController {
 
     @PostMapping({"/{id}/edit", "/new"})
     // Ta metoda zapisuje dane przysłane z formularza obojętnie, czy to było edit, czy new
-    public String saveProduct(Product product) {
+    public String saveProduct(@Valid Product product) {
         // W tej wersji dane z wypełnionego formularza odbieramy w postaci jednego obiektu Product.
         // Spring sam wpisze dane do pól o takich samych nazwach.
         // Taki parametr od razu staje się częścią modelu (to jest tzw. ModelAttribute)
+//        gdy dopiszemy adnotację VALID bez dodatkowych parametrów , Spring dokona walidacji obiektu PRZED uruchomieniem tej metody
+//        Jeśli nie ma dodatkowego parametru BindingResult, a są będy walidacji, to Spring naszej metody nie wykona
+//        gdy podczas zapisu (operacja save) obiekt nie spełnia warunków walidacji, jest wyrzucany  wyjątek
         System.out.println("id przed zapisem: " + product.getProductId());
         productRepository.save(product);
         System.out.println("id po zapisie: " + product.getProductId());
